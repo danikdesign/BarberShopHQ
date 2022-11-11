@@ -38,6 +38,22 @@ post '/visit' do
   Client.create(name: @username, phone: @phone, datestamp: @datestamp, barber: @barber, color: @color)
 
   @title = 'Вы успешно записались. До встречи!'
-  @message = "Вы записаны к нам в BarberShop #{@datestamp} к мастеру: #{@barber}. Вы выбрали цвет окрашивания #{@color}"
+  @content = "Вы записаны к нам в BarberShop #{@datestamp} к мастеру: #{@barber}. Вы выбрали цвет окрашивания #{@color}"
   erb :message
+end
+
+get '/contacts' do
+  erb :contacts
+end
+
+post '/contacts' do
+  @email = params[:email]
+  @message = params[:message]
+
+  Contact.create(email: @email, message: @message)
+
+  @title = 'Спасибо!'
+  @content = 'Мы получили ваше обращение. Мы обязательно свяжемся с вами, позже'
+  erb :message
+
 end
