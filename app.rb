@@ -63,5 +63,6 @@ post '/contacts' do
 end
 
 get '/barber/:id' do
-  erb 'This is gonna be barber page, dude!'
+  @barber = Barber.find params[:id]
+  erb :barber
 end
