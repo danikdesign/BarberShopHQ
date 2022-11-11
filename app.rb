@@ -61,3 +61,7 @@ post '/contacts' do
   erb :message
 
 end
+
+get '/barber/:id' do
+  erb 'This is gonna be barber page, dude!'
+end
