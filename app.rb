@@ -11,6 +11,10 @@ before do
 end
 
 class Client < ActiveRecord::Base
+  validates :name, presence: true
+  validates :phone, presence: true
+  validates :datestamp, presence: true
+  validates :color, presence: true
 end
 
 class Barber < ActiveRecord::Base
@@ -29,13 +33,8 @@ get '/visit' do
 end
 
 post '/visit' do
-  @username = params[:username]
-  @phone = params[:phone]
-  @datestamp = params[:datestamp]
-  @barber = params[:barber]
-  @color = params[:color]
-
-  Client.create(name: @username, phone: @phone, datestamp: @datestamp, barber: @barber, color: @color)
+  c = Client.new params[:client]
+  c.save
 
   @title = 'Вы успешно записались. До встречи!'
   @content = "Вы записаны к нам в BarberShop #{@datestamp} к мастеру: #{@barber}. Вы выбрали цвет окрашивания #{@color}"
