@@ -29,16 +29,21 @@ end
 
 
 get '/visit' do
+  @c = Client.new
   erb :visit
 end
 
 post '/visit' do
-  c = Client.new params[:client]
-  c.save
+  @c = Client.new params[:client]
+  if @c.save
+    @title = 'Вы успешно записались. До встречи!'
+    @content = "Вы записаны к нам в BarberShop"
+    erb :message
+  else
+    @error = @c.errors.full_messages.first
+    erb :visit
+  end
 
-  @title = 'Вы успешно записались. До встречи!'
-  @content = "Вы записаны к нам в BarberShop #{@datestamp} к мастеру: #{@barber}. Вы выбрали цвет окрашивания #{@color}"
-  erb :message
 end
 
 get '/contacts' do
